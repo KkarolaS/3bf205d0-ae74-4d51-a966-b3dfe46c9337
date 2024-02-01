@@ -9,7 +9,5 @@ import { GetService } from '../shared/get.service';
 export class HomeComponent implements OnInit {
   constructor(private getService: GetService) {}
 
-  ngOnInit() {
-    this.getService.onFetchPost();
-  }
+  ngOnInit() {}
 }

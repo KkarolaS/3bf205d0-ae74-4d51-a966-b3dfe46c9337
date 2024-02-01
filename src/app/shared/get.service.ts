@@ -8,11 +8,7 @@ import { Event } from '../home/event.model';
 export class GetService {
   constructor(private http: HttpClient, private eventsService: EventsService) {}
 
-  onFetchPost() {
-    this.fetchPost().subscribe();
-  }
-
-  private fetchPost() {
+  fetchPost() {
     return this.http
       .get<Event[]>(
         'https://teclead-ventures.github.io/data/london-events.json'
