@@ -1,18 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { EventsListComponent } from './home/events-list/events-list.component';
 import { EventItemComponent } from './home/events-list/event-item/event-item.component';
 import { BasketComponent } from './basket/basket.component';
 
+import { EventsService } from './shared/events.service';
+import { GetService } from './shared/get.service';
+
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent, EventsListComponent, EventItemComponent, BasketComponent],
-  imports: [BrowserModule, TooltipModule.forRoot()],
-  providers: [],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    EventsListComponent,
+    EventItemComponent,
+    BasketComponent,
+  ],
+  imports: [
+    BrowserModule,
+    TooltipModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+  ],
+  providers: [EventsService, GetService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
