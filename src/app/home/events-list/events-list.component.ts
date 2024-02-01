@@ -10,7 +10,7 @@ import { GetService } from '../../shared/get.service';
 })
 export class EventsListComponent implements OnInit {
   isFetching: boolean = false;
-  private loadedEvents: Event[];
+  loadedEvents: Event[];
   uniqDatesArray = [];
 
   constructor(
@@ -24,7 +24,6 @@ export class EventsListComponent implements OnInit {
     this.getService.fetchPost().subscribe(() => {
       this.isFetching = false;
       this.loadedEvents = this.eventsService.getEvents();
-      console.log(this.loadedEvents);
 
       let datesArray = this.loadedEvents.map((event) => {
         return event.date;
@@ -53,6 +52,6 @@ export class EventsListComponent implements OnInit {
       return item.toDateString();
     });
 
-    console.log(this.uniqDatesArray);
+    this.eventsService.setDatesArray(this.uniqDatesArray);
   }
 }

@@ -1,0 +1,10 @@
+<section>
+  <div class="container">
+    <div class="row row-cols-auto">
+      <app-event-item
+        *ngFor="let event of eventsWithSameDate"
+        [event]="event"
+      ></app-event-item>
+    </div>
+  </div>
+</section>

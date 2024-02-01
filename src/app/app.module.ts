@@ -8,11 +8,12 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { EventsListComponent } from './home/events-list/events-list.component';
-import { EventItemComponent } from './home/events-list/event-item/event-item.component';
+import { EventItemComponent } from './home/events-list/events-date-wrapper/event-item/event-item.component';
 import { BasketComponent } from './basket/basket.component';
 
 import { EventsService } from './shared/events.service';
 import { GetService } from './shared/get.service';
+import { EventsDateWrapperComponent } from './home/events-list/events-date-wrapper/events-date-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { GetService } from './shared/get.service';
     EventsListComponent,
     EventItemComponent,
     BasketComponent,
+    EventsDateWrapperComponent,
   ],
   imports: [
     BrowserModule,
