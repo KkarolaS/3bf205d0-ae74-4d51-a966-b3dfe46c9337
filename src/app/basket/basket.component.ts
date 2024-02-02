@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventsService } from '../shared/events.service';
 import { Event } from '../home/event.model';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.sass',
 })
-export class BasketComponent implements OnInit {
+export class BasketComponent implements OnInit, OnDestroy {
   shoppingEventsList: Event[];
   subscription: Subscription;
 
@@ -22,5 +22,9 @@ export class BasketComponent implements OnInit {
         this.shoppingEventsList = shopEvents;
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -11,7 +11,6 @@ export class EventsService {
   datesArray: [] = [];
   private events: Event[] = [];
   private shoppingEventsList: Event[] = [];
-
   private searchValue: string = '';
 
   setEvents(newEvents: Event[]) {
@@ -26,21 +25,16 @@ export class EventsService {
     this.eventsChanged.next(this.events.slice());
   }
 
-  setDatesArray(array) {
-    this.datesArray = array;
-  }
-
-  setSearchValue(value: string) {
-    this.searchValue = value;
-    this.searchValueChanged.next(this.searchValue);
-  }
-
   getEvents() {
     return this.events.slice();
   }
 
   getEvent(index: number) {
     return this.events[index];
+  }
+
+  setDatesArray(array) {
+    this.datesArray = array;
   }
 
   addToShoppingEventsList(event: Event) {
@@ -57,6 +51,11 @@ export class EventsService {
     return this.shoppingEventsList.slice();
   }
 
+  setSearchValue(value: string) {
+    this.searchValue = value;
+    this.searchValueChanged.next(this.searchValue);
+  }
+
   getSearchValue() {
     return this.searchValue;
   }
@@ -71,7 +70,7 @@ export class EventsService {
     }
   }
 
-  private setDateFormat(date) {
+  private setDateFormat(date: Date) {
     const day = `${date.getDate() < 10 ? '0' : ''}${date.getDate()}`;
     const month = `${date.getMonth() < 10 ? '0' : ''}${date.getMonth()}`;
     const year = date.getFullYear();

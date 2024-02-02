@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventsService } from '../shared/events.service';
 import { Subscription } from 'rxjs';
 // import { Event } from '../home/event.model';
@@ -10,7 +10,7 @@ import { Event } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.sass',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isFetching: boolean = false;
   eventsNumbers: number;
   subscription: Subscription;
@@ -39,5 +39,9 @@ export class HeaderComponent implements OnInit {
 
   onSearchValue(value: string) {
     this.eventsService.setSearchValue(value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

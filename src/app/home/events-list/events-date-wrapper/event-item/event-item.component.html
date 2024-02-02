@@ -1,9 +1,22 @@
 <div class="col">
   <div class="card" style="width: 18rem">
+    <div class="card-body">
+      <div class="event-header">
+        <img
+          src="../../../../../assets/img/user-photo.jpeg"
+          alt="user"
+          class="user-photo"
+        />
+        <h5 class="card-title">{{ event.title }}</h5>
+      </div>
+      <p class="card-text">{{ event.date }}</p>
+    </div>
     <img [src]="event.imgUrl" class="card-img-top" alt="event" />
     <div class="card-body">
-      <h5 class="card-title">{{ event.title }}</h5>
-      <p class="card-text">{{ event.date }}</p>
+      <a [href]="event.directionUrl" class="card-link" target="_blank">
+        <i class="fa-solid fa-location-dot"></i>
+        {{ event.directionName }}</a
+      >
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item" *ngIf="isStartTime">
@@ -13,14 +26,8 @@
         Ends: {{ event.endTime }}
       </li>
     </ul>
-    <div class="card-body">
-      <a [href]="event.directionUrl" class="card-link" target="_blank">
-        <i class="fa-solid fa-location-dot"></i>
-        {{ event.directionName }}</a
-      >
-    </div>
-    <button class="addEventBtn" (click)="onAddEvent()" *ngIf="!isInBasket">
-      <i class="fa-solid fa-plus"></i>
-    </button>
   </div>
+  <button class="addEventBtn" (click)="onAddEvent()" *ngIf="!isInBasket">
+    <i class="fa-solid fa-plus"></i>
+  </button>
 </div>

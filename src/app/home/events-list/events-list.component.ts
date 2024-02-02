@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventsService } from '../../shared/events.service';
 import { Event } from '../event.model';
 import { GetService } from '../../shared/get.service';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './events-list.component.html',
   styleUrl: './events-list.component.sass',
 })
-export class EventsListComponent implements OnInit {
+export class EventsListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   loadedEvents: Event[];
   uniqDatesArray = [];
@@ -54,4 +54,9 @@ export class EventsListComponent implements OnInit {
 
     this.eventsService.setDatesArray(this.uniqDatesArray);
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+  ///nazwy i nowe new z returnem ////i new const
 }
