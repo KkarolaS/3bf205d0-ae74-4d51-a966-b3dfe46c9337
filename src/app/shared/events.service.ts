@@ -11,8 +11,6 @@ export class EventsService {
   private events: Event[] = [];
   private shoppingEventsList: Event[] = [];
 
-  private filters = [];
-
   setEvents(newEvents: Event[]) {
     newEvents = newEvents.map((event) => {
       event.startTime = this.onCheckDateFormat(event.startTime);
