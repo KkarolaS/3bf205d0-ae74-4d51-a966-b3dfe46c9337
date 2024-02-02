@@ -44,6 +44,7 @@ export class EventsService {
     });
     this.eventsChanged.next(this.events.slice());
     this.shoppingEventsListChanged.next(this.shoppingEventsList.slice());
+    console.log(this.shoppingEventsList.length);
   }
 
   getShoppingEventsList() {

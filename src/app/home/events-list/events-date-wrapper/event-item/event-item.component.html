@@ -19,7 +19,7 @@
         {{ event.directionName }}</a
       >
     </div>
-    <button class="addEventBtn" (click)="onAddEvent()">
+    <button class="addEventBtn" (click)="onAddEvent()" *ngIf="!isInBasket">
       <i class="fa-solid fa-plus"></i>
     </button>
   </div>

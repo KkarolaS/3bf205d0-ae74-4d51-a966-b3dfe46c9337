@@ -12,13 +12,32 @@
           <i class="fa-solid fa-filter"></i>
         </button>
       </form>
-      <div class="d-flex">
-        <button class="btn btn-primary">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <div class="numberItems">
-            <p>{{ eventsNumbers }}</p>
-          </div>
-        </button>
+      <div class="d-flex menu">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              aria-current="page"
+              routerLink="/"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Events</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              aria-current="page"
+              routerLink="/shopping"
+              routerLinkActive="active"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+              <div class="numberItems">
+                <p>{{ eventsNumbers }}</p>
+              </div></a
+            >
+          </li>
+        </ul>
       </div>
     </div>
   </nav>

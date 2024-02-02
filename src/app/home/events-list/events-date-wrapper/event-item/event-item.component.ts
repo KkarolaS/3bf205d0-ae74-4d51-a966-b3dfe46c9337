@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Event } from '../../../event.model';
 import { EventsService } from '../../../../shared/events.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-item',
@@ -10,9 +9,10 @@ import { Router } from '@angular/router';
 })
 export class EventItemComponent implements OnInit {
   @Input() event: Event;
+  @Input() isInBasket: boolean;
   isStartTime: boolean = false;
 
-  constructor(private eventsService: EventsService, private router: Router) {}
+  constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
     if (this.event.imgUrl === '') {
