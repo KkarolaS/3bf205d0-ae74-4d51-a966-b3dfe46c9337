@@ -1,14 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Event } from '../../event.model';
 import { EventsService } from '../../../shared/events.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-events-date-wrapper',
   templateUrl: './events-date-wrapper.component.html',
   styleUrl: './events-date-wrapper.component.sass',
 })
-export class EventsDateWrapperComponent implements OnInit {
+export class EventsDateWrapperComponent implements OnInit, OnDestroy {
   @Input() date: string;
+  subscription: Subscription;
   events: Event[];
   eventsWithSameDate: Event[];
 
@@ -17,11 +19,25 @@ export class EventsDateWrapperComponent implements OnInit {
   ngOnInit(): void {
     this.events = this.eventsService.getEvents();
 
-    this.eventsWithSameDate = this.events.filter((event) => {
-      if (event.date == this.date) {
+    this.subscription = this.eventsService.eventsChanged.subscribe(
+      (events: Event[]) => {
+        this.events = events;
+        this.filterEvents(events);
+      }
+    );
+
+    this.filterEvents(this.events);
+  }
+
+  private filterEvents(events: Event[]) {
+    this.eventsWithSameDate = events.filter((event) => {
+      if (event.date === this.date) {
         return event;
       }
     });
-    console.log(this.eventsWithSameDate);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

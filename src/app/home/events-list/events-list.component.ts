@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../shared/events.service';
 import { Event } from '../event.model';
 import { GetService } from '../../shared/get.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-events-list',
@@ -10,6 +11,7 @@ import { GetService } from '../../shared/get.service';
 })
 export class EventsListComponent implements OnInit {
   isFetching: boolean = false;
+  subscription: Subscription;
   loadedEvents: Event[];
   uniqDatesArray = [];
 

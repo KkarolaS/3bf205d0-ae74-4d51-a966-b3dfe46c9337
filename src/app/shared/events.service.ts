@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Event } from '../home/event.model';
-import { Subject, min } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class EventsService {
   eventsChanged = new Subject<Event[]>();
-  private events: Event[] = [];
+
   datesArray: [] = [];
+  private events: Event[] = [];
+  private shoppingEventsList: Event[] = [];
 
   private filters = [];
 
@@ -25,27 +27,35 @@ export class EventsService {
       } else {
         event.endTime = null;
       }
-
       event.date = new Date(event.date).toDateString();
-
       return event;
     });
     this.events = newEvents;
-    this.eventsChanged.next(this.events);
+    this.eventsChanged.next(this.events.slice());
   }
 
   setDatesArray(array) {
     this.datesArray = array;
-    console.log(this.datesArray);
   }
 
   getEvents() {
-    this.eventsChanged.next(this.events);
     return this.events.slice();
   }
 
   getEvent(index: number) {
     return this.events[index];
+  }
+
+  addToShoppingEventsList(event: Event) {
+    this.shoppingEventsList.push(event);
+    this.events = this.events.filter((item) => {
+      return item !== event;
+    });
+    this.eventsChanged.next(this.events.slice());
+  }
+
+  getShoppingEventsList() {
+    return this.shoppingEventsList.slice();
   }
 
   private setDateFormat(date) {
