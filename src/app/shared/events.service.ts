@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class EventsService {
   eventsChanged = new Subject<Event[]>();
+  shoppingEventsListChanged = new Subject<Event[]>();
 
   datesArray: [] = [];
   private events: Event[] = [];
@@ -14,19 +15,9 @@ export class EventsService {
 
   setEvents(newEvents: Event[]) {
     newEvents = newEvents.map((event) => {
-      if (event.startTime) {
-        const startTime = new Date(event.startTime);
-        event.startTime = this.setDateFormat(startTime);
-      } else {
-        event.startTime = null;
-      }
+      event.startTime = this.onCheckDateFormat(event.startTime);
+      event.endTime = this.onCheckDateFormat(event.endTime);
 
-      if (event.endTime) {
-        const endTime = new Date(event.endTime);
-        event.endTime = this.setDateFormat(endTime);
-      } else {
-        event.endTime = null;
-      }
       event.date = new Date(event.date).toDateString();
       return event;
     });
@@ -52,10 +43,21 @@ export class EventsService {
       return item !== event;
     });
     this.eventsChanged.next(this.events.slice());
+    this.shoppingEventsListChanged.next(this.shoppingEventsList.slice());
   }
 
   getShoppingEventsList() {
     return this.shoppingEventsList.slice();
+  }
+
+  private onCheckDateFormat(time: string) {
+    if (time) {
+      const newTime = new Date(time);
+      time = this.setDateFormat(newTime);
+      return time;
+    } else {
+      return (time = null);
+    }
   }
 
   private setDateFormat(date) {

@@ -5,7 +5,7 @@ import { BasketComponent } from './basket/basket.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'basket', component: BasketComponent },
+  { path: 'shopping', component: BasketComponent },
 ];
 
 @NgModule({
