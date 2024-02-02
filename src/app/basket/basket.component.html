@@ -1,23 +1,20 @@
 <div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <h3>Choosen Events:</h3>
-    </div>
-    <hr />
-    <div
-      class="alert alert-success"
-      role="alert"
-      *ngIf="shoppingEventsList.length === 0"
-    >
-      You have no choosen events! Check available Events and choose your
-      favorite one
-    </div>
-    <div class="row row-cols-auto">
-      <app-event-item
-        *ngFor="let event of shoppingEventsList"
-        [event]="event"
-        [isInBasket]="true"
-      ></app-event-item>
-    </div>
+  <h3 class="basket-title">Choosen Events</h3>
+
+  <hr />
+  <div
+    class="alert alert-success"
+    role="alert"
+    *ngIf="shoppingEventsList.length === 0"
+  >
+    You have no choosen events! Check available Events and choose your favorite
+    one
+  </div>
+  <div class="row row-cols-auto">
+    <app-event-item
+      *ngFor="let event of shoppingEventsList"
+      [event]="event"
+      [isInBasket]="true"
+    ></app-event-item>
   </div>
 </div>

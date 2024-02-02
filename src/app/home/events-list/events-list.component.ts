@@ -20,10 +20,12 @@ export class EventsListComponent implements OnInit, OnDestroy {
     this.loadedEvents = this.eventsService.getEvents();
     this.loadingEvents();
 
-    this.eventsService.eventsChanged.subscribe((events: Event[]) => {
-      this.loadedEvents = events;
-      this.loadingEvents();
-    });
+    this.subscription = this.eventsService.eventsChanged.subscribe(
+      (events: Event[]) => {
+        this.loadedEvents = events;
+        this.loadingEvents();
+      }
+    );
   }
 
   private loadingEvents() {
