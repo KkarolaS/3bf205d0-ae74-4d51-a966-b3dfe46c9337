@@ -10,29 +10,27 @@ import { Subscription } from 'rxjs';
   styleUrl: './events-list.component.sass',
 })
 export class EventsListComponent implements OnInit {
-  isFetching: boolean = false;
   subscription: Subscription;
   loadedEvents: Event[];
   uniqDatesArray = [];
 
-  constructor(
-    private eventsService: EventsService,
-    private getService: GetService
-  ) {}
+  constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
-    this.isFetching = true;
+    this.loadedEvents = this.eventsService.getEvents();
+    this.loadingEvents();
 
-    this.getService.fetchPost().subscribe(() => {
-      this.isFetching = false;
-      this.loadedEvents = this.eventsService.getEvents();
-
-      let datesArray = this.loadedEvents.map((event) => {
-        return event.date;
-      });
-
-      this.onUniqDatesArr(datesArray);
+    this.eventsService.eventsChanged.subscribe((events: Event[]) => {
+      this.loadedEvents = events;
+      this.loadingEvents();
     });
+  }
+
+  private loadingEvents() {
+    let datesArray = this.loadedEvents.map((event) => {
+      return event.date;
+    });
+    this.onUniqDatesArr(datesArray);
   }
 
   private onUniqDatesArr(array) {

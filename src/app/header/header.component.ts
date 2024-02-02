@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../shared/events.service';
 import { Subscription } from 'rxjs';
 import { Event } from '../home/event.model';
+import { GetService } from '../shared/get.service';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +10,15 @@ import { Event } from '../home/event.model';
   styleUrl: './header.component.sass',
 })
 export class HeaderComponent implements OnInit {
+  isFetching: boolean = false;
+
   eventsNumbers: number;
   subscription: Subscription;
 
-  constructor(private eventsService: EventsService) {}
+  constructor(
+    private getService: GetService,
+    private eventsService: EventsService
+  ) {}
 
   ngOnInit(): void {
     this.eventsNumbers = this.eventsService.getShoppingEventsList().length;
@@ -22,5 +28,12 @@ export class HeaderComponent implements OnInit {
         this.eventsNumbers = shopList.length;
       }
     );
+
+    this.isFetching = true;
+
+    this.getService.fetchPost().subscribe(() => {
+      this.isFetching = false;
+      this.eventsService.eventsChanged.next(this.eventsService.getEvents());
+    });
   }
 }
