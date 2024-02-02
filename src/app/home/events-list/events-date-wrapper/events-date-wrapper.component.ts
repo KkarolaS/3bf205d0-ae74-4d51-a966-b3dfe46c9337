@@ -11,13 +11,16 @@ import { Subscription } from 'rxjs';
 export class EventsDateWrapperComponent implements OnInit, OnDestroy {
   @Input() date: string;
   subscription: Subscription;
+  searchSubscr: Subscription;
   events: Event[];
   eventsWithSameDate: Event[];
+  searchValue: string = '';
 
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
     this.events = this.eventsService.getEvents();
+    this.searchValue = this.eventsService.getSearchValue();
 
     this.subscription = this.eventsService.eventsChanged.subscribe(
       (events: Event[]) => {
@@ -35,9 +38,16 @@ export class EventsDateWrapperComponent implements OnInit, OnDestroy {
         return event;
       }
     });
+
+    this.searchSubscr = this.eventsService.searchValueChanged.subscribe(
+      (value: string) => {
+        this.searchValue = value;
+      }
+    );
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.searchSubscr.unsubscribe();
   }
 }

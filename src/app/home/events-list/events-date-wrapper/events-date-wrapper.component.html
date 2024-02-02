@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row row-cols-auto">
       <app-event-item
-        *ngFor="let event of eventsWithSameDate"
+        *ngFor="let event of eventsWithSameDate | searchEventPipe : searchValue"
         [event]="event"
         [isInBasket]="false"
       ></app-event-item>

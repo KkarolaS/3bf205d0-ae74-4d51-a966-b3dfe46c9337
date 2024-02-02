@@ -6,10 +6,13 @@ import { Subject } from 'rxjs';
 export class EventsService {
   eventsChanged = new Subject<Event[]>();
   shoppingEventsListChanged = new Subject<Event[]>();
+  searchValueChanged = new Subject<string>();
 
   datesArray: [] = [];
   private events: Event[] = [];
   private shoppingEventsList: Event[] = [];
+
+  private searchValue: string = '';
 
   setEvents(newEvents: Event[]) {
     newEvents = newEvents.map((event) => {
@@ -25,6 +28,11 @@ export class EventsService {
 
   setDatesArray(array) {
     this.datesArray = array;
+  }
+
+  setSearchValue(value: string) {
+    this.searchValue = value;
+    this.searchValueChanged.next(this.searchValue);
   }
 
   getEvents() {
@@ -47,6 +55,10 @@ export class EventsService {
 
   getShoppingEventsList() {
     return this.shoppingEventsList.slice();
+  }
+
+  getSearchValue() {
+    return this.searchValue;
   }
 
   private onCheckDateFormat(time: string) {

@@ -14,6 +14,8 @@ import { BasketComponent } from './basket/basket.component';
 import { EventsService } from './shared/events.service';
 import { GetService } from './shared/get.service';
 import { EventsDateWrapperComponent } from './home/events-list/events-date-wrapper/events-date-wrapper.component';
+import { FormsModule } from '@angular/forms';
+import { FilterPipe } from './shared/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,12 +26,14 @@ import { EventsDateWrapperComponent } from './home/events-list/events-date-wrapp
     EventItemComponent,
     BasketComponent,
     EventsDateWrapperComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,
     TooltipModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [EventsService, GetService],
   bootstrap: [AppComponent],
