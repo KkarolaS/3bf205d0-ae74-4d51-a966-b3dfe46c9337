@@ -8,6 +8,7 @@
           placeholder="Search"
           aria-label="Search"
           (input)="onSearchValue($event.target.value)"
+          [disabled]="isInBasket"
         />
         <div class="btn btn-primary">
           <i class="fa-solid fa-filter"></i>
@@ -31,6 +32,7 @@
               aria-current="page"
               routerLink="/shopping"
               routerLinkActive="active"
+              (click)="onBasket()"
             >
               <i class="fa-solid fa-cart-shopping"></i>
             </a>

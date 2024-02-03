@@ -19,6 +19,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
+    this.eventsService.setIsBasket(false);
+
     this.isLoading = this.eventsService.getIsLoading();
     this.loadingSubs = this.eventsService.loadingChanged.subscribe(
       (isLoading: boolean) => {

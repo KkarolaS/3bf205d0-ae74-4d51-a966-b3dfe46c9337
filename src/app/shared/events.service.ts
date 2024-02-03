@@ -9,6 +9,7 @@ export class EventsService {
   searchValueChanged = new Subject<string>();
   errorChanged = new Subject<boolean>();
   loadingChanged = new Subject<boolean>();
+  isBasketChanged = new Subject<boolean>();
   datesChanged = new Subject<[]>();
   citesChanged = new Subject<Array<string>>();
 
@@ -19,7 +20,7 @@ export class EventsService {
   private isError: boolean = false;
   private isLoading: boolean = false;
   private cities: Array<string> = [];
-  private generalDates: Array<string> = [];
+  private isInBasket: boolean;
 
   setIsLoading(loading: boolean) {
     this.isLoading = loading;
@@ -59,6 +60,15 @@ export class EventsService {
 
   getError() {
     return this.isError;
+  }
+
+  setIsBasket(value: boolean) {
+    this.isInBasket = value;
+    this.isBasketChanged.next(this.isInBasket);
+  }
+
+  getIsBasket() {
+    return this.isInBasket;
   }
 
   setDatesArray(array) {

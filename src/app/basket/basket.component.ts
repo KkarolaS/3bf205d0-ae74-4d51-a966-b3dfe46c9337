@@ -15,6 +15,7 @@ export class BasketComponent implements OnInit, OnDestroy {
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
+    this.eventsService.setIsBasket(true);
     this.shoppingEventsList = this.eventsService.getShoppingEventsList();
 
     this.subscription = this.eventsService.shoppingEventsListChanged.subscribe(

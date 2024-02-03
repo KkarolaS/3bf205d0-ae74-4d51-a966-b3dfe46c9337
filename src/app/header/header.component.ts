@@ -9,11 +9,21 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   eventsNumbers: number;
+  isInBasket: boolean = false;
   subscription: Subscription;
+  basketSubs: Subscription;
 
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
+    this.isInBasket = this.eventsService.getIsBasket();
+
+    this.basketSubs = this.eventsService.isBasketChanged.subscribe(
+      (value: boolean) => {
+        this.isInBasket = value;
+      }
+    );
+
     this.eventsNumbers = this.eventsService.getShoppingEventsList().length;
     this.subscription = this.eventsService.shoppingEventsListChanged.subscribe(
       (shopList) => {
@@ -26,7 +36,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.eventsService.setSearchValue(value);
   }
 
+  onBasket() {
+    this.isInBasket = true;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.basketSubs.unsubscribe();
   }
 }
