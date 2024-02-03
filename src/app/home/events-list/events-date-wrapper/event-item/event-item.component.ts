@@ -27,6 +27,11 @@ export class EventItemComponent implements OnInit {
     this.eventsService.addToShoppingEventsList(this.event);
   }
 
+  handleMissingEventImg(event: Event) {
+    (event.target as HTMLImageElement).src =
+      'https://picsum.photos/id/117/286/400';
+  }
+
   private timeCheck(time) {
     if (time !== null) {
       this.isStartTime = true;
