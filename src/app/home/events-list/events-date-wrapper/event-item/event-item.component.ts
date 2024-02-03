@@ -10,7 +10,7 @@ import { EventsService } from '../../../../shared/events.service';
 export class EventItemComponent implements OnInit {
   @Input() event: EventParty;
   @Input() isInBasket: boolean;
-  isStartTime: boolean = false;
+  isTime: boolean = false;
 
   constructor(private eventsService: EventsService) {}
 
@@ -34,9 +34,9 @@ export class EventItemComponent implements OnInit {
 
   private timeCheck(time: string) {
     if (time !== null) {
-      this.isStartTime = true;
+      this.isTime = true;
     } else {
-      this.isStartTime = false;
+      this.isTime = false;
     }
   }
 }

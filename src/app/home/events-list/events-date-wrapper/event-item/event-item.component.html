@@ -9,7 +9,7 @@
         />
         <h5 class="card-title">{{ event.title }}</h5>
       </div>
-      <p class="card-text">{{ event.date }}</p>
+      <p class="card-text date">{{ event.date }}</p>
     </div>
     <img
       [src]="event.imgUrl"
@@ -24,15 +24,18 @@
       >
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item" *ngIf="isStartTime">
+      <li class="list-group-item" *ngIf="isTime">
         Starts: {{ event.startTime }}
       </li>
-      <li class="list-group-item" *ngIf="isStartTime">
-        Ends: {{ event.endTime }}
-      </li>
+      <li class="list-group-item" *ngIf="isTime">Ends: {{ event.endTime }}</li>
     </ul>
   </div>
-  <button class="addEventBtn" (click)="onAddEvent()" *ngIf="!isInBasket">
+  <button
+    class="addEventBtn"
+    [ngClass]="{ withoutTime: !isTime }"
+    (click)="onAddEvent()"
+    *ngIf="!isInBasket"
+  >
     <i class="fa-solid fa-plus"></i>
   </button>
 </div>
