@@ -1,4 +1,4 @@
-export class Event {
+export class EventParty {
   public title: string;
   public date: string;
   public city: string;

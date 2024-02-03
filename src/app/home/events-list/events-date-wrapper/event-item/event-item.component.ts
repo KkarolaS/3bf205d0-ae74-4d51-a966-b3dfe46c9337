@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Event } from '../../../event.model';
+import { EventParty } from '../../../../shared/event-party.model';
 import { EventsService } from '../../../../shared/events.service';
 
 @Component({
@@ -8,16 +8,17 @@ import { EventsService } from '../../../../shared/events.service';
   styleUrl: './event-item.component.sass',
 })
 export class EventItemComponent implements OnInit {
-  @Input() event: Event;
+  @Input() event: EventParty;
   @Input() isInBasket: boolean;
   isStartTime: boolean = false;
 
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
-    if (this.event.imgUrl === '') {
-      this.event.imgUrl = 'https://picsum.photos/id/117/200/300';
+    if (this.event.imgUrl === null) {
+      this.event.imgUrl = 'https://picsum.photos/id/117/286/400';
     }
+
     this.timeCheck(this.event.startTime);
     this.timeCheck(this.event.endTime);
   }

@@ -1,19 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Event } from '../home/event.model';
+import { EventParty } from './event-party.model';
 import { Subject } from 'rxjs';
 
 @Injectable()
 export class EventsService {
-  eventsChanged = new Subject<Event[]>();
-  shoppingEventsListChanged = new Subject<Event[]>();
+  eventsChanged = new Subject<EventParty[]>();
+  shoppingEventsListChanged = new Subject<EventParty[]>();
   searchValueChanged = new Subject<string>();
+  errorChanged = new Subject<boolean>();
+  loadingChanged = new Subject<boolean>();
+  datesChanged = new Subject<[]>();
 
   datesArray: [] = [];
-  private events: Event[] = [];
-  private shoppingEventsList: Event[] = [];
+  private events: EventParty[] = [];
+  private shoppingEventsList: EventParty[] = [];
   private searchValue: string = '';
+  private isError: boolean = false;
+  private isLoading: boolean = false;
 
-  setEvents(newEvents: Event[]) {
+  setIsLoading(loading: boolean) {
+    this.isLoading = loading;
+    this.loadingChanged.next(this.isLoading);
+  }
+
+  getIsLoading() {
+    return this.isLoading;
+  }
+
+  setEvents(newEvents: EventParty[]) {
     newEvents = newEvents.map((event) => {
       event.startTime = this.onCheckDateFormat(event.startTime);
       event.endTime = this.onCheckDateFormat(event.endTime);
@@ -33,11 +47,20 @@ export class EventsService {
     return this.events[index];
   }
 
+  setErrror(errorHappend: boolean) {
+    this.isError = errorHappend;
+    this.errorChanged.next(this.isError);
+  }
+
+  getError() {
+    return this.isError;
+  }
+
   setDatesArray(array) {
     this.datesArray = array;
   }
 
-  addToShoppingEventsList(event: Event) {
+  addToShoppingEventsList(event: EventParty) {
     this.shoppingEventsList.push(event);
     this.events = this.events.filter((item) => {
       return item !== event;

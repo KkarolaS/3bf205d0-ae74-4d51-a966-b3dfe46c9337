@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Event } from '../home/event.model';
+import { EventParty } from './event-party.model';
 
 @Pipe({ name: 'searchEventPipe' })
 export class FilterPipe implements PipeTransform {
-  transform(events: Event[], searchValue: string): Event[] {
+  transform(events: EventParty[], searchValue: string): EventParty[] {
     if (!events) {
       return [];
     }

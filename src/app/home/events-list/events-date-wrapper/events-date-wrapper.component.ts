@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Event } from '../../event.model';
+import { EventParty } from '../../../shared/event-party.model';
 import { EventsService } from '../../../shared/events.service';
 import { Subscription } from 'rxjs';
 
@@ -12,8 +12,8 @@ export class EventsDateWrapperComponent implements OnInit, OnDestroy {
   @Input() date: string;
   subscription: Subscription;
   searchSubscr: Subscription;
-  events: Event[];
-  eventsWithSameDate: Event[];
+  events: EventParty[];
+  eventsWithSameDate: EventParty[];
   searchValue: string = '';
 
   constructor(private eventsService: EventsService) {}
@@ -23,7 +23,7 @@ export class EventsDateWrapperComponent implements OnInit, OnDestroy {
     this.searchValue = this.eventsService.getSearchValue();
 
     this.subscription = this.eventsService.eventsChanged.subscribe(
-      (events: Event[]) => {
+      (events: EventParty[]) => {
         this.events = events;
         this.filterEvents(events);
       }
@@ -32,7 +32,7 @@ export class EventsDateWrapperComponent implements OnInit, OnDestroy {
     this.filterEvents(this.events);
   }
 
-  private filterEvents(events: Event[]) {
+  private filterEvents(events: EventParty[]) {
     this.eventsWithSameDate = events.filter((event) => {
       if (event.date === this.date) {
         return event;

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventsService } from '../../shared/events.service';
-import { Event } from '../event.model';
-import { GetService } from '../../shared/get.service';
+import { EventParty } from '../../shared/event-party.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,18 +9,37 @@ import { Subscription } from 'rxjs';
   styleUrl: './events-list.component.sass',
 })
 export class EventsListComponent implements OnInit, OnDestroy {
+  errorOccured: boolean;
+  isLoading: boolean;
+
   subscription: Subscription;
-  loadedEvents: Event[];
+  errSubs: Subscription;
+  loadingSubs: Subscription;
+
+  loadedEvents: EventParty[];
   uniqDatesArray = [];
 
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
+    this.isLoading = this.eventsService.getIsLoading();
+    this.loadingSubs = this.eventsService.loadingChanged.subscribe(
+      (isLoading: boolean) => {
+        this.isLoading = isLoading;
+      }
+    );
+
+    this.errorOccured = this.eventsService.getError();
+    this.errSubs = this.eventsService.errorChanged.subscribe(
+      (isError: boolean) => {
+        this.errorOccured = isError;
+      }
+    );
+
     this.loadedEvents = this.eventsService.getEvents();
     this.loadingEvents();
-
     this.subscription = this.eventsService.eventsChanged.subscribe(
-      (events: Event[]) => {
+      (events: EventParty[]) => {
         this.loadedEvents = events;
         this.loadingEvents();
       }
@@ -55,10 +73,12 @@ export class EventsListComponent implements OnInit, OnDestroy {
     });
 
     this.eventsService.setDatesArray(this.uniqDatesArray);
+    this.eventsService.datesChanged.next(this.eventsService.datesArray);
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.errSubs.unsubscribe();
   }
   ///nazwy i nowe new z returnem ////i new const
 }

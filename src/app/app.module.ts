@@ -12,10 +12,11 @@ import { EventItemComponent } from './home/events-list/events-date-wrapper/event
 import { BasketComponent } from './basket/basket.component';
 
 import { EventsService } from './shared/events.service';
-import { GetService } from './shared/get.service';
+import { PrepResponseService } from './shared/prep-response.service';
 import { EventsDateWrapperComponent } from './home/events-list/events-date-wrapper/events-date-wrapper.component';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './shared/filter.pipe';
+import { FetchService } from './shared/fetch.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { FilterPipe } from './shared/filter.pipe';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [EventsService, GetService],
+  providers: [EventsService, PrepResponseService, FetchService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
