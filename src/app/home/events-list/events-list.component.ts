@@ -16,8 +16,8 @@ export class EventsListComponent implements OnInit, OnDestroy {
   errSubs: Subscription;
   loadingSubs: Subscription;
 
-  loadedEvents: EventParty[];
-  uniqDatesArray = [];
+  events: EventParty[];
+  uniqDatesArray: Array<string> = [];
 
   constructor(private eventsService: EventsService) {}
 
@@ -36,49 +36,54 @@ export class EventsListComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.loadedEvents = this.eventsService.getEvents();
-    this.loadingEvents();
+    this.events = this.eventsService.getEvents();
+    this.uniqDatesArray = this.getUniqDatesAss(this.events);
+    this.eventsService.setDatesArray(this.uniqDatesArray);
+    this.eventsService.datesChanged.next(this.eventsService.datesArray);
+
     this.subscription = this.eventsService.eventsChanged.subscribe(
       (events: EventParty[]) => {
-        this.loadedEvents = events;
-        this.loadingEvents();
+        this.events = events;
+        this.uniqDatesArray = this.getUniqDatesAss(this.events);
+        this.eventsService.setDatesArray(this.uniqDatesArray);
+        this.eventsService.datesChanged.next(this.eventsService.datesArray);
       }
     );
   }
 
-  private loadingEvents() {
-    let datesArray = this.loadedEvents.map((event) => {
+  private getUniqDatesAss(events: EventParty[]) {
+    let datesArray: Array<string> = this.events.map((event) => {
       return event.date;
     });
-    this.onUniqDatesArr(datesArray);
+    return this.onUniqDatesArr(datesArray);
   }
 
-  private onUniqDatesArr(array) {
+  private onUniqDatesArr(array: Array<string>) {
+    let newUniqDatesArr: Array<string> = [];
+
     array.forEach((item: string) => {
-      if (!this.uniqDatesArray.includes(item)) {
-        this.uniqDatesArray.push(item);
+      if (!newUniqDatesArr.includes(item)) {
+        newUniqDatesArr.push(item);
       }
     });
 
-    this.uniqDatesArray = this.uniqDatesArray.map((date) => {
+    let newUniqArrDate: Array<any> = newUniqDatesArr.map((date) => {
       return new Date(date);
     });
 
-    this.uniqDatesArray.sort((a, b) => {
+    newUniqArrDate.sort((a, b) => {
       return a - b;
     });
 
-    this.uniqDatesArray = this.uniqDatesArray.map((item) => {
+    newUniqDatesArr = newUniqArrDate.map((item: Date) => {
       return item.toDateString();
     });
 
-    this.eventsService.setDatesArray(this.uniqDatesArray);
-    this.eventsService.datesChanged.next(this.eventsService.datesArray);
+    return newUniqDatesArr;
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.errSubs.unsubscribe();
   }
-  ///nazwy i nowe new z returnem ////i new const
 }

@@ -19,7 +19,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cities = this.getCityArr();
     this.dates = this.getDate();
-    console.log(this.dates);
+    console.log(
+      this.dates.map((item) => {
+        return (item = new Date());
+      })
+    );
   }
 
   private getCityArr() {
@@ -41,7 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.datesSubs = this.eventsService.datesChanged.subscribe((items: []) => {
       items.map((item) => {
-        dates.push(item);
+        dates.push(new Date(item).toLocaleDateString());
       });
     });
 
