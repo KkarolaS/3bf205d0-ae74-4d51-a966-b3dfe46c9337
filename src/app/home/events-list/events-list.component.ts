@@ -12,9 +12,9 @@ export class EventsListComponent implements OnInit, OnDestroy {
   errorOccured: boolean;
   isLoading: boolean;
 
-  subscription: Subscription;
-  errSubs: Subscription;
   loadingSubs: Subscription;
+  errSubs: Subscription;
+  subscription: Subscription;
 
   events: EventParty[];
   uniqDatesArray: Array<string> = [];
@@ -83,7 +83,8 @@ export class EventsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.loadingSubs.unsubscribe();
     this.errSubs.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

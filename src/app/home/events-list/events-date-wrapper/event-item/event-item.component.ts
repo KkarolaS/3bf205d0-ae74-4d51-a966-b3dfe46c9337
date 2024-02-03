@@ -32,7 +32,7 @@ export class EventItemComponent implements OnInit {
       'https://picsum.photos/id/117/286/400';
   }
 
-  private timeCheck(time) {
+  private timeCheck(time: string) {
     if (time !== null) {
       this.isStartTime = true;
     } else {
