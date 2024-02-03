@@ -39,14 +39,12 @@ export class EventsListComponent implements OnInit, OnDestroy {
     this.events = this.eventsService.getEvents();
     this.uniqDatesArray = this.getUniqDatesAss(this.events);
     this.eventsService.setDatesArray(this.uniqDatesArray);
-    this.eventsService.datesChanged.next(this.eventsService.datesArray);
 
     this.subscription = this.eventsService.eventsChanged.subscribe(
       (events: EventParty[]) => {
         this.events = events;
         this.uniqDatesArray = this.getUniqDatesAss(this.events);
         this.eventsService.setDatesArray(this.uniqDatesArray);
-        this.eventsService.datesChanged.next(this.eventsService.datesArray);
       }
     );
   }

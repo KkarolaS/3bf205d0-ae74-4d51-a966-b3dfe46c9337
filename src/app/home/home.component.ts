@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { EventsService } from '../shared/events.service';
-import { EventParty } from '../shared/event-party.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,50 +9,44 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   cities = [];
-  dates = [];
-  subscription: Subscription;
+  dates: Array<string> = [];
+  isLoading: boolean;
+
+  loadingSubs: Subscription;
+  citySubs: Subscription;
   datesSubs: Subscription;
 
   constructor(private eventsService: EventsService) {}
 
   ngOnInit(): void {
-    this.cities = this.getCityArr();
-    this.dates = this.getDate();
-    console.log(
-      this.dates.map((item) => {
-        return (item = new Date());
-      })
-    );
-  }
-
-  private getCityArr() {
-    let cityArr = [];
-    this.subscription = this.eventsService.eventsChanged.subscribe(
-      (events: EventParty[]) => {
-        events.map((event: EventParty) => {
-          if (!cityArr.includes(event.city)) {
-            cityArr.push(event.city);
-          }
-        });
+    this.isLoading = this.eventsService.getIsLoading();
+    this.loadingSubs = this.eventsService.loadingChanged.subscribe(
+      (isLoading: boolean) => {
+        this.isLoading = isLoading;
       }
     );
-    return cityArr;
-  }
 
-  private getDate() {
-    let dates = [];
-
-    this.datesSubs = this.eventsService.datesChanged.subscribe((items: []) => {
-      items.map((item) => {
-        dates.push(new Date(item).toLocaleDateString());
-      });
+    this.cities = this.eventsService.getCities();
+    this.citySubs = this.eventsService.citesChanged.subscribe((items) => {
+      this.cities = items;
     });
 
-    return dates;
+    let newDates = this.eventsService.getDatesArray();
+    this.dates = newDates.map((date) => {
+      return new Date(date).toLocaleDateString();
+    });
+
+    this.datesSubs = this.eventsService.datesChanged.subscribe((items: []) => {
+      let newDates = items;
+      this.dates = newDates.map((date) => {
+        return new Date(date).toLocaleDateString();
+      });
+    });
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.loadingSubs.unsubscribe();
+    this.citySubs.unsubscribe();
     this.datesSubs.unsubscribe();
   }
 }

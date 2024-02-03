@@ -10,13 +10,16 @@ export class EventsService {
   errorChanged = new Subject<boolean>();
   loadingChanged = new Subject<boolean>();
   datesChanged = new Subject<[]>();
+  citesChanged = new Subject<Array<string>>();
 
-  datesArray: [] = [];
+  private datesArray: [] = [];
   private events: EventParty[] = [];
   private shoppingEventsList: EventParty[] = [];
   private searchValue: string = '';
   private isError: boolean = false;
   private isLoading: boolean = false;
+  private cities: Array<string> = [];
+  private generalDates: Array<string> = [];
 
   setIsLoading(loading: boolean) {
     this.isLoading = loading;
@@ -37,6 +40,8 @@ export class EventsService {
     });
     this.events = newEvents;
     this.eventsChanged.next(this.events.slice());
+    this.cities = this.setCities(this.events);
+    this.citesChanged.next(this.cities);
   }
 
   getEvents() {
@@ -58,6 +63,15 @@ export class EventsService {
 
   setDatesArray(array) {
     this.datesArray = array;
+    this.datesChanged.next(this.datesArray);
+  }
+
+  getDatesArray() {
+    return this.datesArray;
+  }
+
+  getCities() {
+    return this.cities;
   }
 
   addToShoppingEventsList(event: EventParty) {
@@ -67,7 +81,6 @@ export class EventsService {
     });
     this.eventsChanged.next(this.events.slice());
     this.shoppingEventsListChanged.next(this.shoppingEventsList.slice());
-    console.log(this.shoppingEventsList.length);
   }
 
   getShoppingEventsList() {
@@ -101,7 +114,17 @@ export class EventsService {
     const minutes = `${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}`;
     const seconds = `${date.getSeconds() < 10 ? '0' : ''}${date.getSeconds()}`;
     const time = `${hour}:${minutes}:${seconds}`;
-
     return `${day}.${month}.${year}, ${time}`;
+  }
+
+  private setCities(events: EventParty[]) {
+    let cityArr = [];
+    events.map((event: EventParty) => {
+      if (!cityArr.includes(event.city)) {
+        cityArr.push(event.city);
+      }
+    });
+
+    return cityArr;
   }
 }

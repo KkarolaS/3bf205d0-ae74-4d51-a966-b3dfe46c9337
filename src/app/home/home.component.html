@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <div class="container-fluid">
+        <div class="container-fluid" *ngIf="!isLoading">
           <div class="btn city">
             <div class="city-wrapper" *ngFor="let city of cities">
               <img
@@ -19,7 +19,7 @@
     </div>
   </div>
 </header>
-<hr />
+<hr *ngIf="!isLoading" />
 <section>
   <app-events-list></app-events-list>
 </section>
