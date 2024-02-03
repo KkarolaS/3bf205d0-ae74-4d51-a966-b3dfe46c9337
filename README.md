@@ -17,16 +17,11 @@ Install the Angular CLI globally:
 npm install -g @angular/cli
 ```
 
-Create workspace:
+Clone the project and run the application:
 
 ```
-ng new [PROJECT NAME] --no-strict --standalone false --routing false
-```
-
-Run the application:
-
-```
-cd [PROJECT NAME]
+git clone https://github.com/KkarolaS/3bf205d0-ae74-4d51-a966-b3dfe46c9337.git
+npm install
 ng add @ng-bootstrap/ng-bootstrap
 ng serve
 ```
